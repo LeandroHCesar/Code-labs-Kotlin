@@ -1,11 +1,12 @@
 package com.leandrohc.codelabskotlin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.leandrohc.codelabskotlin.databinding.FragmentSecondBinding
 
 /**
@@ -28,9 +29,22 @@ class SecondFragment : Fragment() {
         return binding.root
 
     }
+    private val args: SecondFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val count = args.myArg
+        val countText = getString(R.string.random_heading, count)
+        binding.textviewHeader.text = countText
+
+        val random = java.util.Random()
+        var randomNumber = 0
+        if (count > 0) {
+            randomNumber = random.nextInt(count + 1)
+
+        }
+        binding.textviewRandom.text = randomNumber.toString()
 
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
